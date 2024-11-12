@@ -1,30 +1,21 @@
 #include "DoublyLinkedList.h"
+#include "Surah.h"
 
 int main() {
-    DoublyLinkedList<int> list;
-    list.insertEnd(2);
-    list.insertEnd(1);
-    list.insertEnd(5);
-    list.insertFront(5);
-    list.insertFront(1);
-    list.insertFront(8);
-    list.insertFront(6);
+    system("color 0A");
+    Surah s(1, "Al-Baqraa", "madinah", "al-baqraa.mp3");
+    Surah a(2, "Al-maidah", "madinah", "al-maidah.mp3");
+    Surah e(3, "Taha", "makya", "taha.mp3");
+    Surah f(4, "Al-fatha", "madinah", "al-fatha.mp3");
+    Surah q(5, "Al-mozamel", "madinah", "al-mozamel.mp3");
 
-    list.insert(10, 4);
-    list.insert(15, 2);
-    list.insert(20, 0);
-    list.insert(20, 9);
-    list.insert(30, 11);
+    DoublyLinkedList<Surah> list;
+    list.insertFront(s);
+    list.insertFront(a);
+    list.insertFront(e);
+    list.insertFront(f);
+    list.insertFront(q);
     list.print();
-    list.remove_duplicates();
-    DoublyLinkedList<int> list2;
-    list2 = list;
-    list2.print();
-//    list.print_reversed();
-
-//    list.removeEnd();
-//    list.removeFront();
-//    list.print();
-//    list.print_reversed();
+    system("pause");
     return 0;
 }

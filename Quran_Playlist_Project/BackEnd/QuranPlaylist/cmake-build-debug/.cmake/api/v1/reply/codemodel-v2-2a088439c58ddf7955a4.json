@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "QuranPlaylist::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-QuranPlaylist-Debug-62f84e39738e5d4649b7.json",
+					"jsonFile" : "target-QuranPlaylist-Debug-169c66dbb294a946afd0.json",
 					"name" : "QuranPlaylist",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Quran_Playlist_Project/BackEnd/QuranPlaylist/cmake-build-debug",
-		"source" : "D:/Quran_Playlist_Project/BackEnd/QuranPlaylist"
+		"build" : "D:/My_Github/FCI-DS-Project/Quran_Playlist_Project/BackEnd/QuranPlaylist/cmake-build-debug",
+		"source" : "D:/My_Github/FCI-DS-Project/Quran_Playlist_Project/BackEnd/QuranPlaylist"
 	},
 	"version" : 
 	{

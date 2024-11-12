@@ -1,4 +1,4 @@
-# Install script for directory: D:/Quran_Playlist_Project/BackEnd/QuranPlaylist
+# Install script for directory: D:/My_Github/FCI-DS-Project/Quran_Playlist_Project/BackEnd/QuranPlaylist
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Quran_Playlist_Project/BackEnd/QuranPlaylist/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/My_Github/FCI-DS-Project/Quran_Playlist_Project/BackEnd/QuranPlaylist/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
