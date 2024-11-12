@@ -1,0 +1,3 @@
+D:/Quran_Playlist_Project/BackEnd/QuranPlaylist/cmake-build-debug/CMakeFiles/QuranPlaylist.dir
+D:/Quran_Playlist_Project/BackEnd/QuranPlaylist/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Quran_Playlist_Project/BackEnd/QuranPlaylist/cmake-build-debug/CMakeFiles/rebuild_cache.dir
