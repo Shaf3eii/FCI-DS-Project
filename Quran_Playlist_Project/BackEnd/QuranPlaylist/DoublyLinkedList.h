@@ -53,23 +53,6 @@ class DoublyLinkedList {
             second->prev = first;
     }
 
-    // clear all the list
-    void clear() { // O(n) time - O(1) memory
-        Node<T> *cur = head;
-        while (cur) {
-            Node<T> *next = cur->next;
-            delete cur;
-            cur = next;
-        }
-        head = tail = nullptr;
-        length = 0;
-
-//        recursion may cause some issues such as stack overflow with a large list
-//        if (!cur)
-//            return;
-//        clear(cur->next);
-//        delete cur;
-    }
 
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), length(0) {}; // O(1) time - O(1) memory
@@ -213,6 +196,13 @@ public:
         return -1;
     }
 
+    Node<T>* find(T val) const { // o(n) time - o(1) memory
+        for (Node<T> *cur = head; cur; cur = cur->next)
+            if (cur->data == val)
+                return cur;
+
+        return nullptr;
+    }
 
     void remove_duplicates() { // O(n) time - O(1) memory
         if (length <= 1)
@@ -243,6 +233,13 @@ public:
         blackBoxDebugging();
     }
 
+    Node<T>* getHead() { // O(1) time - O(1) memory
+        return head;
+    }
+
+    Node<T>* getTail() { // O(1) time - O(1) memory
+        return tail;
+    }
 
     size_t size() const { // O(1) time - O(1) memory
         return length;
@@ -250,6 +247,24 @@ public:
 
     bool isEmpty() const { // O(1) time - O(1) memory
         return length == 0;
+    }
+
+    // clear all the list
+    void clear() { // O(n) time - O(1) memory
+        Node<T> *cur = head;
+        while (cur) {
+            Node<T> *next = cur->next;
+            delete cur;
+            cur = next;
+        }
+        head = tail = nullptr;
+        length = 0;
+
+//        recursion may cause some issues such as stack overflow with a large list
+//        if (!cur)
+//            return;
+//        clear(cur->next);
+//        delete cur;
     }
 
     void print() const { // O(n) time - O(1) memory
