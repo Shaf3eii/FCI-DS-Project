@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(QuranPlaylist main.cpp
         DoublyLinkedList.h
         Surah.h
-        PlayList.h)
+        PlayList.h
+        Library.h)

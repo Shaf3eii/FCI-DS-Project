@@ -1,4 +1,4 @@
-#include "PlayList.h"
+#include "Library.h"
 
 int main() {
     system("color 0A");
@@ -14,17 +14,20 @@ int main() {
     playList.addSurah(e);
     playList.addSurah(f);
     playList.addSurah(q);
-    playList.removeSurah(e);
-    playList.print();
-    playList.saveToFile();
-    playList.next();
-    playList.jumpToSurah(f);
-    playList.displayCurrent();
-    PlayList playList1;
-    playList1.loadFromFile();
-    playList1.print();
-    std::cout << playList1.getTotalDuration() << std::endl;
-    playList1.displayCurrent();
+    PlayList playList1("3bdelbaset");
+    playList1.addSurah(s);
+    playList1.addSurah(a);
+    playList1.addSurah(e);
+    playList1.addSurah(f);
+    playList1.addSurah(q);
+    Library library;
+    library.addNewPlayList(playList);
+    library.addNewPlayList(playList1);
+    library.print();
+//    library.removePlayList(playList);
+    library.findPlayListByReader("elmenshawy");
+    library.shufflePlaylists();
+    library.print();
     system("pause");
     return 0;
 }

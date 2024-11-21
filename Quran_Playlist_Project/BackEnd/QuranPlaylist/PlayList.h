@@ -13,20 +13,22 @@
 class PlayList {
     DoublyLinkedList<Surah> playlist;
     std::string reader;
-    Node<Surah> *current{nullptr};
+    Node<Surah> *currentSurah{nullptr};
 public:
     PlayList() = default; // O(1) time - O(1) memory
     explicit PlayList(const std::string &reader) : reader(reader) {} // O(1) time - O(1) memory
     ~PlayList() { // O(n) time - O(1) memory
         playlist.clear();
-        current = nullptr;
+        currentSurah = nullptr;
     }
-
+    bool operator==(PlayList& other) const {
+        return (playlist == other.playlist && reader == other.reader);
+    }
     // add a new surah to the playlist
     void addSurah(const Surah &surah) { // O(1) time - O(1) memory
         playlist.insertEnd(surah);
-        if (!current)
-            current = playlist.getHead();
+        if (!currentSurah)
+            currentSurah = playlist.getHead();
     }
 
     // remove an existing surah to the playlist
@@ -35,18 +37,18 @@ public:
     }
 
     // get the next surah in the playlist
-    void next() { // O(1) time - O(1) memory
-        if (current && current->next) {
-            current = current->next;
+    void nextSurah() { // O(1) time - O(1) memory
+        if (currentSurah && currentSurah->next) {
+            currentSurah = currentSurah->next;
             displayCurrent();
         } else
             std::cout << "No next Surah available!" << std::endl;
     }
 
     // get the previous surah in the playlist
-    void prev() {
-        if (current && current->prev) {
-            current = current->prev;
+    void prevSurah() {
+        if (currentSurah && currentSurah->prev) {
+            currentSurah = currentSurah->prev;
 //            displayCurrent();
         } else
             std::cout << "No previous Surah available!" << std::endl;
@@ -54,7 +56,7 @@ public:
 
     // get the start of the playlist
     void start() { // O(1) time - O(1) memory
-        current = playlist.getHead();
+        currentSurah = playlist.getHead();
 //        displayCurrent();
     }
 
@@ -63,11 +65,15 @@ public:
         start();
     }
 
+    std::string getReader() const {
+        return reader;
+    }
+
     // go to an existing surah in the playlist
     void jumpToSurah(const Surah &surah) { // O(n) time - O(1) memory
         Node<Surah> *temp = playlist.find(surah);
         if (temp)
-            current = temp;
+            currentSurah = temp;
         else
             std::cout << "Surah not found in this playlist!" << std::endl;
 //        displayCurrent();
@@ -75,8 +81,8 @@ public:
 
     // display the current playing
     void displayCurrent() const { // O(1) time - O(1) memory
-        if (current)
-            std::cout << "Now playing: " << current->data.getName() << std::endl;
+        if (currentSurah)
+            std::cout << "Now playing: " << currentSurah->data.getName() << std::endl;
         else
             std::cout << "Playlist is empty or no Surah selected!" << std::endl;
     }
@@ -123,7 +129,7 @@ public:
             return std::cerr << "Error opening file for reading..\n", void();
         if (infile.is_open()) {
             playlist.clear();
-            current = nullptr;
+            currentSurah = nullptr;
             std::string input;
             std::getline(infile, input);
             reader = input;
@@ -138,7 +144,7 @@ public:
                 Surah surah(std::stoi(id), name, type, path, std::stoi(duration));
                 playlist.insertEnd(surah);
             }
-            current = playlist.getHead();
+            currentSurah = playlist.getHead();
             infile.close();
             std::cout << "Playlist loaded from file successfully..!" << std::endl;
         }
@@ -151,6 +157,73 @@ public:
             std::cout << cur->data;
         }
     }
+    // print the playlist a formal way
+    friend std::ostream& operator<<(std::ostream &out, PlayList &playList1) {
+//        out << std::flush;  // Clear the output buffer
+
+        const int width = 20;  // Column width for uniform spacing
+
+        out << std::setw(width * 5 / 2 - 4) << "| " << playList1.reader << " PlayList |" << std::endl;
+        out << "+---------------------+---------------------+---------------------+---------------------+----------------------+" << std::endl;
+        out << "| " << std::left << std::setw(width) << "Surah ID"
+            << "| " << std::left << std::setw(width) << "Name"
+            << "| " << std::left << std::setw(width) << "Type"
+            << "| " << std::left << std::setw(width) << "Audio Path"
+            << "| " << std::left << std::setw(width) << "Duration" << " |" << std::endl;
+        out << "+---------------------+---------------------+---------------------+---------------------+----------------------+" << std::endl;
+
+        for (Node<Surah>* cur = playList1.playlist.getHead(); cur; cur = cur->next) {
+            out << "| " << std::left << std::setw(width) << cur->data.getId()
+                << "| " << std::left << std::setw(width) << cur->data.getName()
+                << "| " << std::left << std::setw(width) << cur->data.getType()
+                << "| " << std::left << std::setw(width) << cur->data.getAudioPath()
+                << "| " << std::left << std::setw(width) << cur->data.getDuration() << " |" << std::endl;
+        }
+        out << "+---------------------+---------------------+---------------------+---------------------+----------------------+" << std::endl;
+        return out;
+    }
+
+    friend std::istream& operator>>(std::istream &in, PlayList &playList) {
+        // Read the reader's name
+        std::cout << "Enter Reader Name: ";
+        std::getline(in, playList.reader);
+
+        int numSurahs;
+        std::cout << "Enter number of Surahs in the playlist: ";
+        in >> numSurahs;
+        in.ignore();
+
+        for (int i = 0; i < numSurahs; ++i) {
+            int id, duration;
+            std::string name, type, audioPath;
+
+            std::cout << "Enter Surah " << i + 1 << " details:\n";
+
+            std::cout << "ID: ";
+            in >> id;
+            in.ignore();
+
+            std::cout << "Name: ";
+            std::getline(in, name);
+
+            std::cout << "Type: ";
+            std::getline(in, type);
+
+            std::cout << "Audio Path: ";
+            std::getline(in, audioPath);
+
+            std::cout << "Duration: ";
+            in >> duration;
+            in.ignore();
+
+            Surah surah(id, name, type, audioPath, duration);
+            playList.playlist.insertEnd(surah);
+        }
+
+        return in;
+    }
+
+
 };
 
 

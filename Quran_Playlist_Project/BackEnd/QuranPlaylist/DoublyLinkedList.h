@@ -79,6 +79,24 @@ public:
         }
         return *this;
     }
+    bool operator==(const DoublyLinkedList<T>& other) {
+        // If lengths are different, the lists are not equal
+        if (length != other.length)
+            return false;
+
+        // Traverse both lists and compare data
+        Node<T>* current = head;
+        Node<T>* otherCurrent = other.head;
+        while (current && otherCurrent) {
+            if (current->data != otherCurrent->data) { // This assumes operator== is defined for T
+                return false;
+            }
+            current = current->next;
+            otherCurrent = otherCurrent->next;
+        }
+        // If both lists are traversed completely and data matches, they are equal
+        return true;
+    }
 
     ~DoublyLinkedList() { // O(n) time - O(1) memory
         clear();
