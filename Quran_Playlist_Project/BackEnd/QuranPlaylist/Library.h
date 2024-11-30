@@ -146,7 +146,7 @@ public:
                 return std::cerr << "Error reading playlist metadata!" << std::endl, void();
 
             PlayList newPlaylist(reader); // Create a playlist with the reader
-            while (surahCount-- > 0) {
+            while (surahCount--) {
                 // Read each Surah's details
                 if (!std::getline(inFile, line))
                     return std::cerr << "Error reading surah data!" << std::endl, void();
