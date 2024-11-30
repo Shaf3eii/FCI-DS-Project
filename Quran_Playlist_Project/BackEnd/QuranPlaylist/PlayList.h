@@ -224,6 +224,13 @@ public:
     }
 
 
+    Node<Surah> *getHead() {
+        auto temp = currentSurah;
+        start();
+        auto ret = currentSurah;
+        currentSurah = temp;
+        return ret;
+    }
 };
 
 

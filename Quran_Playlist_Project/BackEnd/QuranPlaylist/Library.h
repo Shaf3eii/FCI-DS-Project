@@ -107,18 +107,24 @@ public:
         std::cout << "PlayList with reader " << reader << " not found." << std::endl;
     }
 
-
-
-
-
-    // these 2 functions still under development
     void saveToFile() { // O(n) time - O(1) memory
         std::ofstream outFile("library.txt");
-        if (!outFile)
+        if (!outFile.is_open())
             return std::cerr << "Error opening file!" << std::endl, void();
 
-        for (Node<PlayList>* cur = container.getHead(); cur; cur = cur->next)
-            outFile << cur->data;
+        for (Node<PlayList>* cur = container.getHead(); cur; cur = cur->next) {
+            auto& playlist = cur;
+            outFile << playlist->data.getReader() << ","
+                    << playlist->data.size() << "\n";
+
+            for (Node<Surah> *surah = playlist->data.getHead() ; surah ; surah = surah->next) {
+                outFile << surah->data.getId() << ","
+                        << surah->data.getName() << ","
+                        << surah->data.getType() << ","
+                        << surah->data.getAudioPath() << ","
+                        << surah->data.getDuration() << "\n";
+            }
+        }
 
         std::cout << "Library saved to \"library.txt\"" << std::endl;
     }
@@ -127,16 +133,43 @@ public:
         if (!inFile)
             return std::cerr << "Error opening file!" << std::endl, void();
 
-        PlayList playList;
-        while (inFile >> playList)
-            addNewPlayList(playList);
+        container.clear();
+        std::string line;
+        while (std::getline(inFile, line)) {
+            std::istringstream playlistStream(line);
+
+            // Read playlist metadata
+            std::string reader;
+            size_t surahCount;
+
+            if (!(std::getline(playlistStream, reader, ',') && playlistStream >> surahCount))
+                return std::cerr << "Error reading playlist metadata!" << std::endl, void();
+
+            PlayList newPlaylist(reader); // Create a playlist with the reader
+            while (surahCount-- > 0) {
+                // Read each Surah's details
+                if (!std::getline(inFile, line))
+                    return std::cerr << "Error reading surah data!" << std::endl, void();
+
+                std::istringstream surahStream(line);
+                std::string id, name, type, audioPath, duration;
+
+                if (!(std::getline(surahStream, id, ',') and
+                      std::getline(surahStream, name, ',') and
+                      std::getline(surahStream, type, ',') and
+                      std::getline(surahStream, audioPath, ',') and
+                        std::getline(surahStream, duration, '\n'))) {
+                    return std::cerr << "Error parsing surah details!" << std::endl, void();
+                }
+                newPlaylist.addSurah(Surah(stoi(id), name, type, audioPath, stoi(duration)));
+            }
+
+            // Add the playlist to the container
+            container.insertEnd(newPlaylist);
+        }
 
         std::cout << "Library loaded from \"library.txt\"" << std::endl;
     }
-
-
-
-
 
     void clearLibrary() { // O(n) time - O(1) memory
         container.clear();
