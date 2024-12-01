@@ -7,4 +7,5 @@ add_executable(QuranPlaylist main.cpp
         DoublyLinkedList.h
         Surah.h
         PlayList.h
-        Library.h)
+        Library.h
+        Simulate.h)

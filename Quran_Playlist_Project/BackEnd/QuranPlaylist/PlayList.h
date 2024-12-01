@@ -36,6 +36,14 @@ public:
         playlist.remove(surah);
     }
 
+    Surah* getSurahByName(const std::string& surahName) {
+        for (auto cur = playlist.getHead(); cur ; cur = cur->next) {
+            if (cur->data.getName() == surahName)
+                return &cur->data;
+        }
+        return nullptr;
+    }
+
     // get the next surah in the playlist
     void nextSurah() { // O(1) time - O(1) memory
         if (currentSurah && currentSurah->next) {

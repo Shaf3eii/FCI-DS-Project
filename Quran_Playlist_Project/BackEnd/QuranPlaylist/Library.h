@@ -5,7 +5,6 @@
 #ifndef QURANPLAYLIST_LIBRARY_H
 #define QURANPLAYLIST_LIBRARY_H
 
-#endif //QURANPLAYLIST_LIBRARY_H
 
 #include "PlayList.h"
 
@@ -178,9 +177,27 @@ public:
     }
 
     // print the whole library
-    void print() { // O(n) time - O(1) memory
+    void printWholePlaylistsWithInformation() { // O(n) time - O(1) memory
         for (Node<PlayList> *cur = container.getHead(); cur; cur = cur->next)
             std::cout << cur->data;
     }
 
+    // print the playlists names
+    void printPlaylistsNames() {
+        const int columnWidth = 20; // Adjust width as needed
+        int index = 1;
+
+        // Print table header
+        std::cout << std::setw(5) << "No." << std::setw(columnWidth) << "Playlist Name" << std::endl;
+        std::cout << std::string(5 + columnWidth, '-') << std::endl;
+
+        // Print each playlist name
+        for (Node<PlayList> *cur = container.getHead(); cur; cur = cur->next, ++index) {
+            std::cout << std::setw(5) << index << std::setw(columnWidth) << cur->data.getReader() << std::endl;
+        }
+    }
+
 };
+
+
+#endif //QURANPLAYLIST_LIBRARY_H
