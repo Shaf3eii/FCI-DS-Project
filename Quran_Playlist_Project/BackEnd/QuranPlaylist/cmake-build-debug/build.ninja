@@ -65,7 +65,7 @@ build CMakeFiles/QuranPlaylist.dir/main.cpp.obj: CXX_COMPILER__QuranPlaylist_uns
 
 build QuranPlaylist.exe: CXX_EXECUTABLE_LINKER__QuranPlaylist_Debug CMakeFiles/QuranPlaylist.dir/main.cpp.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\QuranPlaylist.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

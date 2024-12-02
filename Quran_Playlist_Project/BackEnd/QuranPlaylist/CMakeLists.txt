@@ -8,4 +8,7 @@ add_executable(QuranPlaylist main.cpp
         Surah.h
         PlayList.h
         Library.h
-        Simulate.h)
+        Simulate.h
+        AudioPlayer.h)
+
+target_link_libraries(QuranPlaylist PRIVATE winmm)

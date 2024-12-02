@@ -95,6 +95,10 @@ public:
             std::cout << "Playlist is empty or no Surah selected!" << std::endl;
     }
 
+    Surah *getCurrentSurah() {
+        return reinterpret_cast<Surah *>(currentSurah);
+    }
+
     // get the total time of the playlist
     size_t getTotalDuration() { // O(n) time - O(1) memory
         size_t tot = 0;

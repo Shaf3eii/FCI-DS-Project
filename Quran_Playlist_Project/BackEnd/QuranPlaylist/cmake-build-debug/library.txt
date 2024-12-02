@@ -1,12 +1,3 @@
-elmenshawy,5
-1,Al-Baqraa,madinah,al-baqraa.mp3,150
-2,Al-maidah,madinah,al-maidah.mp3,175
-3,Taha,makya,taha.mp3,90
-4,Al-fatha,madinah,al-fatha.mp3,350
-5,Al-mozamel,madinah,al-mozamel.mp3,752
-3bdelbaset,5
-1,Al-Baqraa,madinah,al-baqraa.mp3,150
-2,Al-maidah,madinah,al-maidah.mp3,175
-3,Taha,makya,taha.mp3,90
-4,Al-fatha,madinah,al-fatha.mp3,350
-5,Al-mozamel,madinah,al-mozamel.mp3,752
+haza3,2
+1,alnasr,madina,D:\\My_Github\\FCI-DS-Project\\Quran_Playlist_Project\\BackEnd\\QuranPlaylist\\data\\haza3(elnasr).wav,30
+2,alfatiha,makya,D:\\My_Github\\FCI-DS-Project\\Quran_Playlist_Project\\BackEnd\\QuranPlaylist\\data\\haza3(elfatiha).wav,43

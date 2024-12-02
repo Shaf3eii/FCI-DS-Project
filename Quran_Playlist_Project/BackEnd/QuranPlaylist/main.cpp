@@ -1,19 +1,23 @@
 #include "Library.h"
-#include <windows.h>
 #include "Simulate.h"
 
 int main() {
     system("color 0A");
     welcome();
-    ManagerMenu();
     Library MyLibrary;
     int op;
     bool flag = true;
     do {
+        ManagerMenu();
         std::cin >> op;
+        std::cin.ignore();
         switch (op) {
             case 1: {
                 PlayList playList = getPlayListInformation();
+                if (MyLibrary.doesPlayListExist(playList.getReader())) {
+                    std::cerr << "This Playlist already exist.." << std::endl;
+                    break;
+                }
                 addNewPlayList(MyLibrary, playList);
                 break;
             }
@@ -22,15 +26,17 @@ int main() {
                 displayAllCurrentPlayListsNames(MyLibrary);
                 std::cout << "Enter the playlist name: " << std::endl;
                 std::string playlistName;
-                std::cin.ignore();
                 std::getline(std::cin, playlistName);
                 if (!MyLibrary.doesPlayListExist(playlistName)) {
                     std::cerr << "No playlist with this name.." << std::endl;
-                    ManagerMenu();
                     break;
                 }
                 PlayList *playlist;
                 playlist = MyLibrary.findPlayListByReader(playlistName);
+                if (!playlist) {
+                    std::cerr << "Error finding playlist." << std::endl;
+                    break;
+                }
                 std::cout << "Enter the surah information: " << std::endl;
                 Surah surah = getSurahInformation();
                 addSurahToAnExistingPlayList(*playlist, surah);
@@ -41,18 +47,15 @@ int main() {
                 displayAllCurrentPlayListsNames(MyLibrary);
                 std::cout << "Enter the playlist name: " << std::endl;
                 std::string playlistName;
-                std::cin.ignore();
                 std::getline(std::cin, playlistName);
                 if (!MyLibrary.doesPlayListExist(playlistName)) {
                     std::cerr << "No playlist with this name.." << std::endl;
-                    ManagerMenu();
                     break;
                 }
                 PlayList *playlist;
                 playlist = MyLibrary.findPlayListByReader(playlistName);
                 std::cout << "Enter the surah name: " << std::endl;
                 std::string surahName;
-                std::cin.ignore();
                 std::getline(std::cin, surahName);
                 Surah *surah = playlist->getSurahByName(surahName);
                 removeSurahFromExistingPlayList(*playlist, *surah);
@@ -64,12 +67,10 @@ int main() {
             }
             case 5: {
                 displayAllCurrentPlayListsNames(MyLibrary);
-                ManagerMenu();
                 break;
             }
             case 6: {
                 displayAllCurrentPlayListsWithInformation(MyLibrary);
-                ManagerMenu();
                 break;
             }
             case 7: {
@@ -81,15 +82,38 @@ int main() {
                 std::getline(std::cin, playlistName);
                 if (!MyLibrary.doesPlayListExist(playlistName)) {
                     std::cerr << "No playlist with this name.." << std::endl;
-                    ManagerMenu();
+                    break;
+                }
+                PlayList *playlist;
+                playlist = MyLibrary.findPlayListByReader(playlistName);
+                if (!playlist) {
+                    std::cerr << "Error finding playlist." << std::endl;
+                    break;
+                }
+                displaySpecificPlaylist(*playlist);
+                break;
+            }
+            case 8: { // simulate the audio player
+                // put the logic here
+                std::cout << "Current playlists: " << std::endl;
+                displayAllCurrentPlayListsNames(MyLibrary);
+                std::cout << "Enter the playlist name: " << std::endl;
+                std::string playlistName;
+                std::getline(std::cin, playlistName);
+                if (!MyLibrary.doesPlayListExist(playlistName)) {
+                    std::cerr << "No playlist with this name.." << std::endl;
                     break;
                 }
                 PlayList *playlist;
                 playlist = MyLibrary.findPlayListByReader(playlistName);
                 displaySpecificPlaylist(*playlist);
-            }
-            case 8: { // simulate the audio player
-                // put the logic here
+                std::cout << "Which Surah you want? Enter the name of Surah:" << std::endl;
+                std::string SurahName;
+                std::getline(std::cin, SurahName);
+                Surah *surah = playlist->getSurahByName(SurahName);
+                std::string SurahPath = surah->getAudioPath();
+                size_t duration = surah->getDuration();
+                playSurah(*playlist, SurahName ,SurahPath, duration);
                 break;
             }
             case 9: {
@@ -105,16 +129,19 @@ int main() {
                 displayAllCurrentPlayListsNames(MyLibrary);
                 std::cout << "Enter the playlist name: " << std::endl;
                 std::string playlistName;
-                std::cin.ignore();
                 std::getline(std::cin, playlistName);
                 if (!MyLibrary.doesPlayListExist(playlistName)) {
                     std::cerr << "No playlist with this name.." << std::endl;
-                    ManagerMenu();
                     break;
                 }
                 PlayList *playlist;
+                if (!playlist) {
+                    std::cerr << "Error finding playlist." << std::endl;
+                    break;
+                }
                 playlist = MyLibrary.findPlayListByReader(playlistName);
                 removePlaylistFromLibrary(MyLibrary, *playlist);
+                break;
             }
             case 12: {
                 Exit();
